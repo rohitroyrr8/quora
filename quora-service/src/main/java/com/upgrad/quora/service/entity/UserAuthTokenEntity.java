@@ -23,6 +23,10 @@ public class UserAuthTokenEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "UUID")
+    @NotNull
+    private String uuid;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private UserEntity user;
@@ -49,6 +53,14 @@ public class UserAuthTokenEntity implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public UserEntity getUser() {
