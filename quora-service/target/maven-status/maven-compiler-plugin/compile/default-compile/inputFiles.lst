@@ -1,4 +1,6 @@
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\common\UnexpectedException.java
+C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\dao\UserDao.java
+C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\entity\UserEntity.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\exception\AuthenticationFailedException.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\exception\InvalidQuestionException.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\business\JwtTokenProvider.java
@@ -7,6 +9,9 @@ C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\business\PasswordCryptographyProvider.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\exception\UserNotFoundException.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\exception\AuthorizationFailedException.java
+C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\business\SignupBusinessService.java
+C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\entity\RoleEntity.java
+C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\entity\UserAuthTokenEntity.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\exception\AnswerNotFoundException.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\exception\SignOutRestrictedException.java
 C:\Users\Apoxy\Downloads\quora_stub\quora\quora-service\src\main\java\com\upgrad\quora\service\common\ErrorCode.java

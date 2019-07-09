@@ -6,7 +6,7 @@ server:
 spring:
 
   application:
-    name:
+    name: proman-api
 
   datasource:
     driverClassName: org.postgresql.Driver
