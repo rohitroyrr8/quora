@@ -17,7 +17,7 @@ public class CommonBusinessService {
     @Autowired
     private UserDao userDao;
 
-    @Transactional(propagation = Propagation.REQUIRED)
+
     public UserEntity getUser(String uuid, String authorization) throws UserNotFoundException, AuthorizationFailedException {
 
         UserAuthTokenEntity authToken = userDao.getAuthTokenByAccessToken(authorization);
