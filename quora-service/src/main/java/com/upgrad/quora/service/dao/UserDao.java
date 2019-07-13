@@ -57,6 +57,9 @@ public class UserDao {
         return authToken;
     }
 
+    public void deleteUser (UserEntity user) {
+        entityManager.remove(user);
+    }
     public UserAuthTokenEntity getAuthTokenByAccessToken(String authToken) {
         try{
             return entityManager.createNamedQuery("userAuthTokenByAccessToken", UserAuthTokenEntity.class)
