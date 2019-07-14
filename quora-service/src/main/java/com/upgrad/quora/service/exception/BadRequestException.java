@@ -4,7 +4,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 
 /**
- * AuthorizationFailedException is thrown when user not submitted valid request.
+ * BadRequestException is thrown when user not submitted valid request.
  */
 public class BadRequestException extends Exception {
     private final String code;
