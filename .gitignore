@@ -1,8 +1,0 @@
-.classpath
-.project
-*.iml
-.settings/
-.idea/
-quora-api/target/
-quora-db/target/
-quora-service/target/

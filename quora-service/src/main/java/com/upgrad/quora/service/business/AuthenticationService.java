@@ -19,6 +19,9 @@ public class AuthenticationService {
     @Autowired
     private UserDao userDao;
 
+    @Autowired
+    private  PasswordCryptographyProvider provider;
+
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthTokenEntity authenticate(final String username, final String password) throws AuthenticationFailedException {
         UserEntity user = userDao.getUserByUsername(username);
@@ -26,7 +29,7 @@ public class AuthenticationService {
             throw new AuthenticationFailedException("ATH-001", "This username does not exist");
 
         }
-        final String encryptPassword = PasswordCryptographyProvider.encrypt(password, user.getSalt());
+        final String encryptPassword = provider.encrypt(password, user.getSalt());
         if(encryptPassword.equals(user.getPassword())) {
             JwtTokenProvider tokenProvider = new JwtTokenProvider(encryptPassword);
             UserAuthTokenEntity authToken = new UserAuthTokenEntity();
