@@ -40,4 +40,8 @@ public class QuestionDao {
             return Optional.empty();
         }
     }
+
+    public void delete(QuestionEntity question) {
+        entityManager.remove(question);
+    }
 }

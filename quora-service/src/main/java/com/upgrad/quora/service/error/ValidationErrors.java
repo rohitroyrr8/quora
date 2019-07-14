@@ -8,7 +8,7 @@ public enum ValidationErrors {
     EDIT_QUESTION_SIGNED_OUT("ATHR-002", "User is signed out.Sign in first to edit the question"),
     DELETE_QUESTION_SIGNED_OUT("ATHR-002", "User is signed out.Sign in first to delete a question"),
     OWNER_ONLY_CAN_EDIT("ATHR-003", "Only the question owner can edit the question"),
-    QUESTION_OWNER_ONLY_CAN_DELETE("ATHR-003", "Only the question owner or admin can delete the question"),
+    QUESTION_OWNER_ADMIN_ONLY_CAN_DELETE("ATHR-003", "Only the question owner or admin can delete the question"),
 
     INVALID_QUESTION("QUES-001", "Entered question uuid does not exist"),
 
