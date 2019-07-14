@@ -44,7 +44,7 @@ public class RestExceptionHandler {
                 new ErrorResponse()
                         .code(ex.getCode())
                         .message(ex.getErrorMessage())
-                , HttpStatus.UNAUTHORIZED);
+                , HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(AuthenticationFailedException.class)
