@@ -83,7 +83,7 @@ public class QuestionController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "question/all/{userId}", method = RequestMethod.PUT,
+    @RequestMapping(path = "question/all/{userId}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestionsByUser(@PathVariable("userId") String userId,
                                                                                @RequestHeader("authorization") final String token)
