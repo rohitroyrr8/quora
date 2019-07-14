@@ -44,4 +44,8 @@ public class QuestionDao {
     public void delete(QuestionEntity question) {
         entityManager.remove(question);
     }
+
+    public void update(QuestionEntity question) {
+        entityManager.merge(question);
+    }
 }

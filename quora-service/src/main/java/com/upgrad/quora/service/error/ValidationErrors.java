@@ -14,7 +14,7 @@ public enum ValidationErrors {
 
     USER_NOT_FOUND_QUESTIONS("USR-001", "User with entered uuid whose question details are to be seen does not exist"),
 
-    NO_DETAIL_IN_QUESTION("BR-001","Question should have detail");
+    NO_CONTENT_IN_QUESTION("BR-001","Question should have content");
 
     private String code;
     private String reason;

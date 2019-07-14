@@ -1,9 +1,6 @@
 package com.upgrad.quora.api.controller;
 
-import com.upgrad.quora.api.model.QuestionDetailsResponse;
-import com.upgrad.quora.api.model.QuestionRequest;
-import com.upgrad.quora.api.model.QuestionResponse;
-import com.upgrad.quora.api.model.SignupUserResponse;
+import com.upgrad.quora.api.model.*;
 import com.upgrad.quora.service.business.QuestionService;
 import com.upgrad.quora.service.entity.QuestionEntity;
 import com.upgrad.quora.service.error.ValidationErrors;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -41,8 +37,8 @@ public class QuestionController {
             throws AuthorizationFailedException, BadRequestException {
 
         if (StringUtils.isBlank(request.getContent())) {
-            throw new BadRequestException(ValidationErrors.NO_DETAIL_IN_QUESTION.getCode(),
-                    ValidationErrors.NO_DETAIL_IN_QUESTION.getReason());
+            throw new BadRequestException(ValidationErrors.NO_CONTENT_IN_QUESTION.getCode(),
+                    ValidationErrors.NO_CONTENT_IN_QUESTION.getReason());
         }
 
         QuestionEntity questionEntity = new QuestionEntity(UUID.randomUUID().toString(), request.getContent(), LocalDateTime.now());
@@ -63,11 +59,28 @@ public class QuestionController {
 
     @RequestMapping(path = "/question/delete/{questionId}", method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<QuestionResponse> delete(@PathVariable("questionId") String uuid,
+    public ResponseEntity<QuestionResponse> delete(@PathVariable("questionId") final String uuid,
                                                    @RequestHeader("authorization") final String token)
             throws AuthorizationFailedException, InvalidQuestionException {
         questionService.delete(uuid, token);
         QuestionResponse response = new QuestionResponse().id(uuid).status("QUESTION DELETED");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/question/edit/{questionId}", method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<QuestionResponse> delete(final QuestionEditRequest request,
+                                                   @PathVariable("questionId") final String uuid,
+                                                   @RequestHeader("authorization") final String token)
+            throws AuthorizationFailedException, InvalidQuestionException, BadRequestException {
+
+        if (StringUtils.isBlank(request.getContent())) {
+            throw new BadRequestException(ValidationErrors.NO_CONTENT_IN_QUESTION.getCode(),
+                    ValidationErrors.NO_CONTENT_IN_QUESTION.getReason());
+        }
+
+        questionService.update(uuid, token, request.getContent());
+        QuestionResponse response = new QuestionResponse().id(uuid).status("QUESTION EDITED");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
