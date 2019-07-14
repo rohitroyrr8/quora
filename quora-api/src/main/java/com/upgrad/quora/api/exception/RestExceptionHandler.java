@@ -57,7 +57,7 @@ public class RestExceptionHandler {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorResponse> dadRequestException(BadRequestException ex, WebRequest request) {
+    public ResponseEntity<ErrorResponse> badRequestException(BadRequestException ex, WebRequest request) {
         return new ResponseEntity<>(
                 new ErrorResponse()
                         .code(ex.getCode())
