@@ -16,9 +16,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class PasswordCryptographyProvider {
 
-    private static final String SECRET_KEY_ALGORITHM = "PBKDF2WithHmacSHA512";
-    private static final int HASHING_ITERATIONS = 1000;
-    private static final int HASHING_KEY_LENGTH = 64;
+    private static String SECRET_KEY_ALGORITHM = "PBKDF2WithHmacSHA512";
+    private static int HASHING_ITERATIONS = 1000;
+    private static int HASHING_KEY_LENGTH = 64;
     private final static char[] hexArray = "0123456789ABCDEF".toCharArray();
 
     /**
@@ -69,7 +69,8 @@ public class PasswordCryptographyProvider {
             SecretKeyFactory skf = SecretKeyFactory.getInstance(SECRET_KEY_ALGORITHM);
             PBEKeySpec spec = new PBEKeySpec(password, salt, HASHING_ITERATIONS, HASHING_KEY_LENGTH);
             SecretKey key = skf.generateSecret(spec);
-            return key.getEncoded();
+            byte[] res = key.getEncoded();
+            return res;
         } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
             throw new RuntimeException(e);
         }
