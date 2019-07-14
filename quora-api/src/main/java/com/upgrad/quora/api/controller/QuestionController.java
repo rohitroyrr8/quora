@@ -33,7 +33,7 @@ public class QuestionController {
     @RequestMapping(path = "/question/create", method = RequestMethod.POST,
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<QuestionResponse> create(final QuestionRequest request, @RequestHeader("authorization") final String token)
+    public ResponseEntity<QuestionResponse> createQuestion(final QuestionRequest request, @RequestHeader("authorization") final String token)
             throws AuthorizationFailedException, BadRequestException {
 
         if (StringUtils.isBlank(request.getContent())) {
@@ -49,7 +49,7 @@ public class QuestionController {
 
     @RequestMapping(path = "/question/all", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<QuestionDetailsResponse>> getAll(@RequestHeader("authorization") final String token) throws AuthorizationFailedException {
+    public ResponseEntity<List<QuestionDetailsResponse>> getAllQuestions(@RequestHeader("authorization") final String token) throws AuthorizationFailedException {
         List<QuestionEntity> allQuestions = questionService.getAll(token);
         List<QuestionDetailsResponse> response = allQuestions.stream()
                 .map(question -> new QuestionDetailsResponse().id(question.getUuid()).content(question.getContent()))
@@ -59,7 +59,7 @@ public class QuestionController {
 
     @RequestMapping(path = "/question/delete/{questionId}", method = RequestMethod.DELETE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<QuestionResponse> delete(@PathVariable("questionId") final String uuid,
+    public ResponseEntity<QuestionResponse> deleteQuestion(@PathVariable("questionId") final String uuid,
                                                    @RequestHeader("authorization") final String token)
             throws AuthorizationFailedException, InvalidQuestionException {
         questionService.delete(uuid, token);
@@ -69,7 +69,7 @@ public class QuestionController {
 
     @RequestMapping(path = "/question/edit/{questionId}", method = RequestMethod.PUT,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<QuestionResponse> delete(final QuestionEditRequest request,
+    public ResponseEntity<QuestionResponse> editQuestionContent(final QuestionEditRequest request,
                                                    @PathVariable("questionId") final String uuid,
                                                    @RequestHeader("authorization") final String token)
             throws AuthorizationFailedException, InvalidQuestionException, BadRequestException {
