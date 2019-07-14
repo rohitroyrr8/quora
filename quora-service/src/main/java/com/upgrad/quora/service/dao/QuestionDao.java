@@ -30,6 +30,16 @@ public class QuestionDao {
         }
     }
 
+    public List<QuestionEntity> findAllByUser(UserEntity user) {
+        try {
+            return entityManager.createNamedQuery("getAllQuestionsByUser", QuestionEntity.class)
+                    .setParameter("user", user)
+                    .getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     public Optional<QuestionEntity> findQuestionByUUID(String questionId) {
         try {
             QuestionEntity result = entityManager.createNamedQuery("questionByUUID", QuestionEntity.class)

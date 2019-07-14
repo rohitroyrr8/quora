@@ -71,7 +71,7 @@ public class RestExceptionHandler {
                 new ErrorResponse()
                         .code(ex.getCode())
                         .message(ex.getErrorMessage())
-                , HttpStatus.BAD_REQUEST);
+                , HttpStatus.NOT_FOUND);
     }
 
 }

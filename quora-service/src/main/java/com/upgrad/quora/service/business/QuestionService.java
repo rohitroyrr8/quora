@@ -8,6 +8,7 @@ import com.upgrad.quora.service.entity.UserEntity;
 import com.upgrad.quora.service.error.ValidationErrors;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
 import com.upgrad.quora.service.exception.InvalidQuestionException;
+import com.upgrad.quora.service.exception.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -88,6 +89,21 @@ public class QuestionService {
             throw new AuthorizationFailedException(ValidationErrors.OWNER_ONLY_CAN_EDIT.getCode(),
                     ValidationErrors.OWNER_ONLY_CAN_EDIT.getReason());
         }
+    }
+
+    public List<QuestionEntity> getAllByUser(String userId, String token) throws UserNotFoundException, AuthorizationFailedException {
+        UserEntity user = userDao.getUser(userId);
+        if (user == null) {
+            throw new UserNotFoundException(ValidationErrors.USER_NOT_FOUND_QUESTIONS.getCode(),
+                    ValidationErrors.USER_NOT_FOUND_QUESTIONS.getReason());
+        }
+        UserAuthTokenEntity authToken = userDao.getAuthTokenByAccessToken(token);
+        throwErrorIfTokenNotExist(authToken);
+        if (isSignedOut(authToken)) {
+            throw new AuthorizationFailedException(ValidationErrors.GET_ALL_QUESTIONS_USER_SIGNED_OUT.getCode(),
+                    ValidationErrors.GET_ALL_QUESTIONS_USER_SIGNED_OUT.getReason());
+        }
+        return questionDao.findAllByUser(user);
     }
 
     private QuestionEntity get(String uuid) throws InvalidQuestionException {
