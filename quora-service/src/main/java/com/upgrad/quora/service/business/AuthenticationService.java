@@ -20,17 +20,17 @@ public class AuthenticationService {
     private UserDao userDao;
 
     @Autowired
-    private  PasswordCryptographyProvider provider;
+    private PasswordCryptographyProvider provider;
 
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthTokenEntity authenticate(final String username, final String password) throws AuthenticationFailedException {
         UserEntity user = userDao.getUserByUsername(username);
-        if(user == null) {
+        if (user == null) {
             throw new AuthenticationFailedException("ATH-001", "This username does not exist");
 
         }
         final String encryptPassword = provider.encrypt(password, user.getSalt());
-        if(encryptPassword.equals(user.getPassword())) {
+        if (encryptPassword.equals(user.getPassword())) {
             JwtTokenProvider tokenProvider = new JwtTokenProvider(encryptPassword);
             UserAuthTokenEntity authToken = new UserAuthTokenEntity();
             authToken.setUser(user);
@@ -53,7 +53,7 @@ public class AuthenticationService {
     @Transactional(propagation = Propagation.REQUIRED)
     public UserAuthTokenEntity logout(final String accessToken) throws SignOutRestrictedException {
         UserAuthTokenEntity authToken = userDao.getAuthTokenByAccessToken(accessToken);
-        if(authToken == null) {
+        if (authToken == null) {
             throw new SignOutRestrictedException("SGR-001", "User is not Signed in");
         }
         authToken.setLogoutAt(ZonedDateTime.now());

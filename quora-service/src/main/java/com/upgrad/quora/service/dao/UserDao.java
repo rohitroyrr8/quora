@@ -29,21 +29,21 @@ public class UserDao {
     }
 
     public UserEntity getUserByEmail(final String email) {
-        try{
+        try {
             return entityManager.createNamedQuery("userByEmail", UserEntity.class)
                     .setParameter("email", email)
                     .getSingleResult();
-        }catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
 
     public UserEntity getUserByUsername(final String username) {
-        try{
+        try {
             return entityManager.createNamedQuery("userByUsername", UserEntity.class)
                     .setParameter("username", username)
                     .getSingleResult();
-        }catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }
@@ -58,11 +58,11 @@ public class UserDao {
     }
 
     public UserAuthTokenEntity getAuthTokenByAccessToken(String authToken) {
-        try{
+        try {
             return entityManager.createNamedQuery("userAuthTokenByAccessToken", UserAuthTokenEntity.class)
                     .setParameter("accessToken", authToken)
                     .getSingleResult();
-        }catch(Exception e) {
+        } catch (Exception e) {
             return null;
         }
     }

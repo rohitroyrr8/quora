@@ -55,4 +55,14 @@ public class RestExceptionHandler {
                         .message(ex.getErrorMessage())
                 , HttpStatus.UNAUTHORIZED);
     }
+
+    @ExceptionHandler(BadRequestException.class)
+    public ResponseEntity<ErrorResponse> dadRequestException(BadRequestException ex, WebRequest request) {
+        return new ResponseEntity<>(
+                new ErrorResponse()
+                        .code(ex.getCode())
+                        .message(ex.getErrorMessage())
+                , HttpStatus.BAD_REQUEST);
+    }
+
 }
