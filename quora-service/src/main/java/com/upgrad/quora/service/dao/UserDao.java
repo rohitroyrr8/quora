@@ -57,9 +57,22 @@ public class UserDao {
         return authToken;
     }
 
+    public void deleteUser (UserEntity user) {
+        entityManager.remove(user);
+    }
     public UserAuthTokenEntity getAuthTokenByAccessToken(String authToken) {
         try{
             return entityManager.createNamedQuery("userAuthTokenByAccessToken", UserAuthTokenEntity.class)
+                    .setParameter("accessToken", authToken)
+                    .getSingleResult();
+        }catch(Exception e) {
+            return null;
+        }
+    }
+
+    public UserAuthTokenEntity getAuthTokenByAccessTokenAndLogout(String authToken) {
+        try{
+            return entityManager.createNamedQuery("userAuthTokenByAccessTokenAndLogout", UserAuthTokenEntity.class)
                     .setParameter("accessToken", authToken)
                     .getSingleResult();
         }catch(Exception e) {
