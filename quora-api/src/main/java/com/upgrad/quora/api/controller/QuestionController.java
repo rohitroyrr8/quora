@@ -1,5 +1,6 @@
 package com.upgrad.quora.api.controller;
 
+import com.upgrad.quora.api.model.QuestionDetailsResponse;
 import com.upgrad.quora.api.model.QuestionRequest;
 import com.upgrad.quora.api.model.QuestionResponse;
 import com.upgrad.quora.api.model.SignupUserResponse;
@@ -19,7 +20,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
@@ -43,9 +47,19 @@ public class QuestionController {
                     ValidationErrors.NO_DETAIL_IN_QUESTION.getReason());
         }
 
-        QuestionEntity questionEntity = new QuestionEntity(UUID.randomUUID(), request.getContent(), LocalDateTime.now());
+        QuestionEntity questionEntity = new QuestionEntity(UUID.randomUUID().toString(), request.getContent(), LocalDateTime.now());
         QuestionEntity createdQuestion = questionService.create(questionEntity, token);
         QuestionResponse response = new QuestionResponse().id(createdQuestion.getUuid().toString()).status("CREATED - Question created successfully");
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @RequestMapping(path = "/question/all", method = RequestMethod.GET,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<QuestionDetailsResponse>> getAll(@RequestHeader("authorization") final String token) throws AuthorizationFailedException {
+        List<QuestionEntity> allQuestions = questionService.getAll(token);
+        List<QuestionDetailsResponse> response = allQuestions.stream()
+                .map(question -> new QuestionDetailsResponse().id(question.getUuid().toString()).content(question.getContent()))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

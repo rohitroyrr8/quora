@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static com.upgrad.quora.service.util.DateUtils.isBeforeNow;
 import static java.util.Objects.nonNull;
 import static java.util.Objects.isNull;
@@ -40,6 +42,19 @@ public class QuestionService {
         }
         question.setUser(authToken.getUser());
         return questionDao.createQuestion(question);
+    }
+
+    public List<QuestionEntity> getAll(String token) throws AuthorizationFailedException {
+        UserAuthTokenEntity authToken = userDao.getAuthTokenByAccessToken(token);
+        if (isNull(authToken)) {
+            throw new AuthorizationFailedException(ValidationErrors.USER_NOT_SIGNED_IN.getCode(),
+                    ValidationErrors.USER_NOT_SIGNED_IN.getReason());
+        }
+        if (isSignedOut(authToken)) {
+            throw new AuthorizationFailedException(ValidationErrors.GET_ALL_QUESTIONS_SIGNED_OUT.getCode(),
+                    ValidationErrors.GET_ALL_QUESTIONS_SIGNED_OUT.getReason());
+        }
+        return questionDao.findAll();
     }
 
     private boolean isSignedOut(UserAuthTokenEntity authToken) {

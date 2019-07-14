@@ -2,13 +2,13 @@ package com.upgrad.quora.service.entity;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Entity
 @Table(name = "question")
 @NamedQueries(
         {
-                @NamedQuery(name = "questionByUUID", query = "select q from QuestionEntity q where q.uuid = :uuid")
+                @NamedQuery(name = "questionByUUID", query = "select q from QuestionEntity q where q.uuid = :uuid"),
+                @NamedQuery(name = "getAllQuestions", query = "select q from QuestionEntity q")
         }
 )
 public class QuestionEntity {
@@ -18,7 +18,7 @@ public class QuestionEntity {
     private Integer id;
 
     @Column(name = "uuid")
-    private UUID uuid;
+    private String uuid;
 
     @Column(name = "content")
     private String content;
@@ -30,7 +30,11 @@ public class QuestionEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-    public QuestionEntity(UUID uuid, String content, LocalDateTime date) {
+    public QuestionEntity() {
+
+    }
+
+    public QuestionEntity(String uuid, String content, LocalDateTime date) {
         this.uuid = uuid;
         this.content = content;
         this.date = date;
@@ -44,11 +48,11 @@ public class QuestionEntity {
         this.id = id;
     }
 
-    public UUID getUuid() {
+    public String getUuid() {
         return uuid;
     }
 
-    public void setUuid(UUID uuid) {
+    public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 

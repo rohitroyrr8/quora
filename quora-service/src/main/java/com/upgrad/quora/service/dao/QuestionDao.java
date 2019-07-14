@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +22,15 @@ public class QuestionDao {
         return question;
     }
 
-    public Optional<QuestionEntity> findQuestionByUUID(UUID questionId) {
+    public List<QuestionEntity> findAll() {
+        try {
+            return entityManager.createNamedQuery("getAllQuestions", QuestionEntity.class).getResultList();
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
+    public Optional<QuestionEntity> findQuestionByUUID(String questionId) {
         try {
             QuestionEntity result = entityManager.createNamedQuery("questionByUUID", QuestionEntity.class)
                     .setParameter("uuid", questionId)
