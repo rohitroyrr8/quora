@@ -44,7 +44,7 @@ public class RestExceptionHandler {
                 new ErrorResponse()
                         .code(ex.getCode())
                         .message(ex.getErrorMessage())
-                , HttpStatus.UNAUTHORIZED);
+                , HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(AuthenticationFailedException.class)
@@ -63,6 +63,15 @@ public class RestExceptionHandler {
                         .code(ex.getCode())
                         .message(ex.getErrorMessage())
                 , HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(InvalidQuestionException.class)
+    public ResponseEntity<ErrorResponse> badRequestException(InvalidQuestionException ex, WebRequest request) {
+        return new ResponseEntity<>(
+                new ErrorResponse()
+                        .code(ex.getCode())
+                        .message(ex.getErrorMessage())
+                , HttpStatus.NOT_FOUND);
     }
 
 }
