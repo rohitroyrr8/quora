@@ -38,10 +38,10 @@ public class AnswerDao {
         entityManager.remove(answer);
     }
 
-     public List<AnswerEntity> findAllAnswerByQuestionId(String questionId) {
+     public List<AnswerEntity> findAllAnswerByQuestion(QuestionEntity question) {
         try{
             return entityManager.createNamedQuery("answerByQuestionId", AnswerEntity.class)
-                    .setParameter("question", questionId)
+                    .setParameter("question", question)
                     .getResultList();
         }catch (Exception e) {
             return new ArrayList<>();
