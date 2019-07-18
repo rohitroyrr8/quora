@@ -40,16 +40,17 @@ public class QuestionDao {
         }
     }
 
-    public Optional<QuestionEntity> findQuestionByUUID(String questionId) {
+    public QuestionEntity findQuestionByUUID(String questionId) {
         try {
             QuestionEntity result = entityManager.createNamedQuery("questionByUUID", QuestionEntity.class)
                     .setParameter("uuid", questionId)
                     .getSingleResult();
-            return Optional.of(result);
+            return result;
         } catch (Exception ex) {
-            return Optional.empty();
+            return null;
         }
     }
+
 
     public void delete(QuestionEntity question) {
         entityManager.remove(question);

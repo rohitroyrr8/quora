@@ -74,4 +74,13 @@ public class RestExceptionHandler {
                 , HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(AnswerNotFoundException.class)
+    public ResponseEntity<ErrorResponse> answerNotFoundException(AnswerNotFoundException ex, WebRequest request) {
+        return new ResponseEntity<>(
+                new ErrorResponse()
+                        .code(ex.getCode())
+                        .message(ex.getErrorMessage())
+                , HttpStatus.NOT_FOUND);
+    }
+
 }
