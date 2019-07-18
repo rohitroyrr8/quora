@@ -3,6 +3,7 @@ package com.upgrad.quora.api.controller;
 import com.upgrad.quora.api.model.*;
 import com.upgrad.quora.service.business.AnswerBusinessService;
 import com.upgrad.quora.service.entity.AnswerEntity;
+import com.upgrad.quora.service.entity.QuestionEntity;
 import com.upgrad.quora.service.error.ValidationErrors;
 import com.upgrad.quora.service.exception.AnswerNotFoundException;
 import com.upgrad.quora.service.exception.AuthorizationFailedException;
@@ -15,7 +16,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
@@ -68,4 +71,20 @@ public class AnswerController {
 
     }
 
+    @RequestMapping(path = "answer/all/{questionId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ResponseEntity<List<AnswerDetailsResponse>> getAllAnswersToQuestion(@PathVariable final String questionId, @RequestHeader final String authorization) throws AuthorizationFailedException, InvalidQuestionException {
+
+        List<AnswerEntity> allAnswers = answerBusinessService.getAllAnswerByQuestion(questionId, authorization);
+
+        return new ResponseEntity<>(toAnswerDetailResponse(allAnswers), HttpStatus.OK);
+    }
+
+
+    private List<AnswerDetailsResponse> toAnswerDetailResponse(List<AnswerEntity> allAnswers) {
+        return allAnswers.stream()
+                .map(answer -> new AnswerDetailsResponse().id(answer.getUuid())
+                                                            .questionContent(answer.getQuestion().getContent())
+                                                               .answerContent(answer.getAnswer()))
+                .collect(Collectors.toList());
+    }
 }

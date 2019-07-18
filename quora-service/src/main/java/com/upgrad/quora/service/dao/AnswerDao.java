@@ -38,9 +38,9 @@ public class AnswerDao {
         entityManager.remove(answer);
     }
 
-     List<AnswerEntity> findAnswerByQuestionId(String questionId) {
+     public List<AnswerEntity> findAllAnswerByQuestionId(String questionId) {
         try{
-            return entityManager.createNamedQuery("getAnswerById", AnswerEntity.class)
+            return entityManager.createNamedQuery("answerByQuestionId", AnswerEntity.class)
                     .setParameter("question", questionId)
                     .getResultList();
         }catch (Exception e) {

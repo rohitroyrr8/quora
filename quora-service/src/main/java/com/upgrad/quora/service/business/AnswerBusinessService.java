@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Date;
+import java.util.List;
 
 import static com.upgrad.quora.service.util.DateUtils.isBeforeNow;
 import static java.util.Objects.isNull;
@@ -95,6 +96,21 @@ public class AnswerBusinessService {
                 throw new AuthorizationFailedException(ValidationErrors.ANSWER_OWNER_ADMIN_ONLY_CAN_DELETE.getCode(), ValidationErrors.ANSWER_OWNER_ADMIN_ONLY_CAN_DELETE.getReason());
         }
         answerDao.delete(tempAnswer);
+    }
+
+
+    public List<AnswerEntity> getAllAnswerByQuestion(final String uuid, final String token) throws AuthorizationFailedException, InvalidQuestionException {
+        UserAuthTokenEntity authToken = userDao.getAuthTokenByAccessToken(token);
+        throwErrorIfTokenNotExist(authToken);
+        if (isSignedOut(authToken)) {
+            throw new AuthorizationFailedException(ValidationErrors.DELETE_ANSWER_SIGNED_OUT.getCode(),
+                    ValidationErrors.DELETE_ANSWER_SIGNED_OUT.getReason());
+        }
+        QuestionEntity question = questionDao.findQuestionByUUID(uuid);
+        if(question == null) {
+            throw new InvalidQuestionException(ValidationErrors.INVALID_QUESTION.getCode(), ValidationErrors.INVALID_QUESTION.getReason());
+        }
+        return answerDao.findAllAnswerByQuestionId(uuid);
     }
 
     private void throwErrorIfTokenNotExist(UserAuthTokenEntity authToken) throws AuthorizationFailedException {
