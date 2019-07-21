@@ -86,8 +86,8 @@ public class QuestionService {
             question.setContent(detail);
             questionDao.update(question);
         } else {
-            throw new AuthorizationFailedException(ValidationErrors.OWNER_ONLY_CAN_EDIT.getCode(),
-                    ValidationErrors.OWNER_ONLY_CAN_EDIT.getReason());
+            throw new AuthorizationFailedException(ValidationErrors.OWNER_ONLY_CAN_EDIT_QUESTION.getCode(),
+                    ValidationErrors.OWNER_ONLY_CAN_EDIT_QUESTION.getReason());
         }
     }
 
@@ -107,9 +107,14 @@ public class QuestionService {
     }
 
     private QuestionEntity get(String uuid) throws InvalidQuestionException {
-        return questionDao.findQuestionByUUID(uuid)
-                .orElseThrow(() -> new InvalidQuestionException(ValidationErrors.INVALID_QUESTION.getCode(),
-                        ValidationErrors.INVALID_QUESTION.getReason()));
+        try{
+            return questionDao.findQuestionByUUID(uuid);
+
+        }catch (Exception e){
+            throw new InvalidQuestionException(ValidationErrors.INVALID_QUESTION.getCode(),
+                    ValidationErrors.INVALID_QUESTION.getReason());
+        }
+
     }
 
     private void throwErrorIfTokenNotExist(UserAuthTokenEntity authToken) throws AuthorizationFailedException {

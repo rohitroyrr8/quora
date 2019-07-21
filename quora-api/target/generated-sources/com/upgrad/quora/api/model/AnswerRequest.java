@@ -13,14 +13,14 @@ import javax.validation.constraints.*;
  * AnswerRequest
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-07-15T10:58:32.551+05:30")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-07-17T10:30:22.976+05:30")
 
 public class AnswerRequest   {
   @JsonProperty("answer")
-  private String answer = null;
+  private String content = null;
 
-  public AnswerRequest answer(String answer) {
-    this.answer = answer;
+  public AnswerRequest answer(String content) {
+    this.content = content;
     return this;
   }
 
@@ -32,12 +32,12 @@ public class AnswerRequest   {
   @NotNull
 
 
-  public String getAnswer() {
-    return answer;
+  public String getContent() {
+    return content;
   }
 
-  public void setAnswer(String answer) {
-    this.answer = answer;
+  public void setContent(String content) {
+    this.content= content;
   }
 
 
@@ -50,12 +50,12 @@ public class AnswerRequest   {
       return false;
     }
     AnswerRequest answerRequest = (AnswerRequest) o;
-    return Objects.equals(this.answer, answerRequest.answer);
+    return Objects.equals(this.content, answerRequest.content);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(answer);
+    return Objects.hash(content);
   }
 
   @Override
@@ -63,7 +63,7 @@ public class AnswerRequest   {
     StringBuilder sb = new StringBuilder();
     sb.append("class AnswerRequest {\n");
     
-    sb.append("    answer: ").append(toIndentedString(answer)).append("\n");
+    sb.append("    answer: ").append(toIndentedString(content)).append("\n");
     sb.append("}");
     return sb.toString();
   }
